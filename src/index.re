@@ -8,7 +8,15 @@ open PConstants;
 
 /* https://www.youtube.com/watch?v=KkyIDI6rQJI
    Purple rain processing demo */
-type dropT = {x: int, y: int, z: int, len: int, yspeed: int, color: Common.colorT, time: int};
+type dropT = {
+  x: int,
+  y: int,
+  z: int,
+  len: int,
+  yspeed: int,
+  color: Common.colorT,
+  time: int
+};
 
 let make w (ymin, ymax) time => {
   let z = random 0 20;
@@ -23,7 +31,11 @@ let make w (ymin, ymax) time => {
   }
 };
 
-type state = {lst: list dropT, running: bool, time: int};
+type state = {
+  lst: list dropT,
+  running: bool,
+  time: int
+};
 
 let rec init n f acc =>
   switch n {
@@ -83,3 +95,26 @@ let mouseDragged ({time} as state) env => {
 };
 
 ReProcessor.run ::setup ::draw ::mouseDown ::mouseUp ::mouseDragged ();
+
+module App = {
+  include ReactRe.Component;
+  let name = "App";
+  type props = {
+    dispatch: Store.action => unit,
+    state: Store.state
+  };
+  let className: string =
+    Styles.make alignItems::"center" display::"flex" flexDirection::"column" ()
+    |> Styles.className;
+  let render {props: {dispatch, state: {operations}}} => {
+    let output = Operation.getInput operations;
+    <main className>
+      <Hero />
+      <Calculator> <Display output /> <Buttons dispatch /> </Calculator>
+    </main>
+  };
+};
+
+include ReactRe.CreateComponent App;
+
+let createElement ::state ::dispatch => wrapProps {dispatch, state};

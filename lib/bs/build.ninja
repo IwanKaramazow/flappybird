@@ -1,0 +1,112 @@
+ninja_required_version = 1.5.1 
+bs_package_flags = -bs-package-name reprocessing
+src_root_dir = /Users/Iwan/Development/reprocessing
+bsc = /Users/Iwan/Development/reprocessing/node_modules/bs-platform/bin/bsc.exe
+bsb_helper = /Users/Iwan/Development/reprocessing/node_modules/bs-platform/bin/bsb_helper.exe
+ocamllex = ocamllex.opt
+bsc_flags = -nostdlib -I /Users/Iwan/Development/reprocessing/node_modules/bs-platform/lib/ocaml -no-alias-deps -color always -w -40+6+7+27+32..39+44+45
+ppx_flags = 
+bs_package_includes = -I /Users/Iwan/Development/reprocessing/node_modules/reasongl-interface/lib/ocaml -I /Users/Iwan/Development/reprocessing/node_modules/reasongl-web/lib/ocaml
+external_deps_for_linking = 
+refmt = /Users/Iwan/Development/reprocessing/node_modules/bs-platform/bin/refmt.exe
+reason_react_jsx = 
+refmt_flags = --print binary
+ocamlc = ocamlc
+ocamlopt = ocamlopt
+bsb_dir_group = 0
+bsc_lib_includes = -I src
+rule build_ast_and_deps_from_reason_impl
+  command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx}  ${ppx_flags} ${bsc_flags} -c -o ${out} -bs-syntax-only -bs-binary-ast -impl ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build src/font.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/font.re
+rule build_deps
+  command = ${bsb_helper} -g ${bsb_dir_group} -MD ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build src/font.mlast.d : build_deps src/font.mlast
+rule build_cmj_cmi
+  command = ${bsc} ${bs_package_flags} -bs-assume-no-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${bsc_flags} -o ${in} -c  ${in} ${postbuild}
+  depfile = ${in}.d
+  description = [34mBuilding[39m [2m${out}[22m
+build src/font.cmj $src_root_dir/lib/js/src/font.js $src_root_dir/lib/es6/src/font.js src/font.cmi : build_cmj_cmi src/font.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/index.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/index.re
+build src/index.mlast.d : build_deps src/index.mlast
+build src/index.cmj $src_root_dir/lib/js/src/index.js $src_root_dir/lib/es6/src/index.js src/index.cmi : build_cmj_cmi src/index.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/noise.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/noise.re
+build src/noise.mlast.d : build_deps src/noise.mlast
+build src/noise.cmj $src_root_dir/lib/js/src/noise.js $src_root_dir/lib/es6/src/noise.js src/noise.cmi : build_cmj_cmi src/noise.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/react.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/react.re
+build src/react.mlast.d : build_deps src/react.mlast
+build src/react.cmj $src_root_dir/lib/js/src/react.js $src_root_dir/lib/es6/src/react.js src/react.cmi : build_cmj_cmi src/react.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/utils.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/utils.re
+build src/utils.mlast.d : build_deps src/utils.mlast
+build src/utils.cmj $src_root_dir/lib/js/src/utils.js $src_root_dir/lib/es6/src/utils.js src/utils.cmi : build_cmj_cmi src/utils.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/common.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/common.re
+build src/common.mlast.d : build_deps src/common.mlast
+build src/common.cmj $src_root_dir/lib/js/src/common.js $src_root_dir/lib/es6/src/common.js src/common.cmi : build_cmj_cmi src/common.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/flappy.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/flappy.re
+build src/flappy.mlast.d : build_deps src/flappy.mlast
+build src/flappy.cmj $src_root_dir/lib/js/src/flappy.js $src_root_dir/lib/es6/src/flappy.js src/flappy.cmi : build_cmj_cmi src/flappy.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/Layout.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/Layout.re
+build src/Layout.mlast.d : build_deps src/Layout.mlast
+build src/Layout.cmj $src_root_dir/lib/js/src/Layout.js $src_root_dir/lib/es6/src/Layout.js src/Layout.cmi : build_cmj_cmi src/Layout.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/matrix.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/matrix.re
+build src/matrix.mlast.d : build_deps src/matrix.mlast
+build src/matrix.cmj $src_root_dir/lib/js/src/matrix.js $src_root_dir/lib/es6/src/matrix.js src/matrix.cmi : build_cmj_cmi src/matrix.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/shaders.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/shaders.re
+build src/shaders.mlast.d : build_deps src/shaders.mlast
+build src/shaders.cmj $src_root_dir/lib/js/src/shaders.js $src_root_dir/lib/es6/src/shaders.js src/shaders.cmi : build_cmj_cmi src/shaders.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/glloader.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/glloader.re
+build src/glloader.mlast.d : build_deps src/glloader.mlast
+build src/glloader.cmj $src_root_dir/lib/js/src/glloader.js $src_root_dir/lib/es6/src/glloader.js src/glloader.cmi : build_cmj_cmi src/glloader.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/glhelpers.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/glhelpers.re
+build src/glhelpers.mlast.d : build_deps src/glhelpers.mlast
+build src/glhelpers.cmj $src_root_dir/lib/js/src/glhelpers.js $src_root_dir/lib/es6/src/glhelpers.js src/glhelpers.cmi : build_cmj_cmi src/glhelpers.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/redsquare.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/redsquare.re
+build src/redsquare.mlast.d : build_deps src/redsquare.mlast
+build src/redsquare.cmj $src_root_dir/lib/js/src/redsquare.js $src_root_dir/lib/es6/src/redsquare.js src/redsquare.cmi : build_cmj_cmi src/redsquare.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/LayoutPrint.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/LayoutPrint.re
+build src/LayoutPrint.mlast.d : build_deps src/LayoutPrint.mlast
+build src/LayoutPrint.cmj $src_root_dir/lib/js/src/LayoutPrint.js $src_root_dir/lib/es6/src/LayoutPrint.js src/LayoutPrint.cmi : build_cmj_cmi src/LayoutPrint.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/LayoutTypes.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/LayoutTypes.re
+build src/LayoutTypes.mlast.d : build_deps src/LayoutTypes.mlast
+build src/LayoutTypes.cmj $src_root_dir/lib/js/src/LayoutTypes.js $src_root_dir/lib/es6/src/LayoutTypes.js src/LayoutTypes.cmi : build_cmj_cmi src/LayoutTypes.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/LayoutValue.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/LayoutValue.re
+build src/LayoutValue.mlast.d : build_deps src/LayoutValue.mlast
+build src/LayoutValue.cmj $src_root_dir/lib/js/src/LayoutValue.js $src_root_dir/lib/es6/src/LayoutValue.js src/LayoutValue.cmi : build_cmj_cmi src/LayoutValue.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/ReJsPrelude.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/ReJsPrelude.re
+build src/ReJsPrelude.mlast.d : build_deps src/ReJsPrelude.mlast
+build src/ReJsPrelude.cmj $src_root_dir/lib/js/src/ReJsPrelude.js $src_root_dir/lib/es6/src/ReJsPrelude.js src/ReJsPrelude.cmi : build_cmj_cmi src/ReJsPrelude.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/reprocessing.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/reprocessing.re
+build src/reprocessing.mlast.d : build_deps src/reprocessing.mlast
+build src/reprocessing.cmj $src_root_dir/lib/js/src/reprocessing.js $src_root_dir/lib/es6/src/reprocessing.js src/reprocessing.cmi : build_cmj_cmi src/reprocessing.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/drawfunctions.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/drawfunctions.re
+build src/drawfunctions.mlast.d : build_deps src/drawfunctions.mlast
+build src/drawfunctions.cmj $src_root_dir/lib/js/src/drawfunctions.js $src_root_dir/lib/es6/src/drawfunctions.js src/drawfunctions.cmi : build_cmj_cmi src/drawfunctions.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/LayoutSupport.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/LayoutSupport.re
+build src/LayoutSupport.mlast.d : build_deps src/LayoutSupport.mlast
+build src/LayoutSupport.cmj $src_root_dir/lib/js/src/LayoutSupport.js $src_root_dir/lib/es6/src/LayoutSupport.js src/LayoutSupport.cmi : build_cmj_cmi src/LayoutSupport.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build src/LayoutTestUtils.mlast : build_ast_and_deps_from_reason_impl $src_root_dir/src/LayoutTestUtils.re
+build src/LayoutTestUtils.mlast.d : build_deps src/LayoutTestUtils.mlast
+build src/LayoutTestUtils.cmj $src_root_dir/lib/js/src/LayoutTestUtils.js $src_root_dir/lib/es6/src/LayoutTestUtils.js src/LayoutTestUtils.cmi : build_cmj_cmi src/LayoutTestUtils.mlast
+  bs_package_flags = $bs_package_flags  -bs-package-output es6:lib/es6/src -bs-package-output commonjs:lib/js/src
+build build.ninja : phony  ||  src/LayoutTestUtils.mlast.d src/LayoutSupport.mlast.d src/drawfunctions.mlast.d src/reprocessing.mlast.d src/ReJsPrelude.mlast.d src/LayoutValue.mlast.d src/LayoutTypes.mlast.d src/LayoutPrint.mlast.d src/redsquare.mlast.d src/glhelpers.mlast.d src/glloader.mlast.d src/shaders.mlast.d src/matrix.mlast.d src/Layout.mlast.d src/flappy.mlast.d src/common.mlast.d src/utils.mlast.d src/react.mlast.d src/noise.mlast.d src/index.mlast.d src/font.mlast.d

@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "description": "Processing library for Reason",
   "scripts": {
-    "build": "./node_modules/.bin/bsb -make-world && ./node_modules/.bin/webpack -d lib/js/src/index.js lib/js/src/app.js"
+    "build": "./node_modules/.bin/bsb -make-world && ./node_modules/.bin/webpack -d lib/js/src/flappy.js lib/js/src/app.js"
   },
   "dependencies": {
     "bs-platform": "bsansouci/bucklescript#simple-native-compilation",
     "reasongl-interface": "bsansouci/reasongl-interface#bsb-support",
-    "reasongl-web": "bsansouci/reasongl-web#bsb-support"
+    "reasongl-web": "bsansouci/reasongl-web#bsb-support",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "repository": {
     "type": "git",
